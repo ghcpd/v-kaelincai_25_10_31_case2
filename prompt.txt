@@ -1,0 +1,135 @@
+Role
+You are a software engineer responsible for implementing and testing the capabilities of AI models on the Regression subtype within the Bug-related category.
+Your task is to provide two separate, complete Python projects:
+________________________________________
+1.	Project A – Pre-Optimization (Faulty Implementation)
+A project that contains the original, faulty, or inefficient implementation that demonstrates a regression issue — for example, previously working functionality now fails or behaves incorrectly after a change.
+2.	Project B – Post-Optimization (Improved Implementation)
+A project that contains the improved, optimized, and corrected implementation addressing the issues identified in Project A.
+________________________________________
+Each project must include its own code, environment requirements, setup scripts, test cases, and execution commands.
+You must ensure that all files are generated, saved locally, and fully reproducible.
+Both projects should handle optimizations, edge cases, and correctness verification while ensuring measurable improvements in stability and performance.
+________________________________________
+Title
+Evaluation of GPT-5-Codex, GPT-5, Claude Sonnet 4.5, S100, and S40 on Bug-related – Regression Detection, Mitigation, and Optimization
+________________________________________
+Description
+This experiment evaluates AI models' ability to detect, diagnose, and correct regression issues in software systems while optimizing overall performance and reliability.
+Key Evaluation Criteria
+• Correctness of both pre- and post-optimization implementations
+• Efficiency and performance of regression mitigation solutions
+• Handling of malformed inputs, hidden vulnerabilities, non-string inputs, and complex nested code
+• Automated test coverage and reproducibility
+• One-click setup and execution for both versions
+• Quantitative comparison of stability, correctness, and performance before and after optimization
+________________________________________
+Requirements for the AI Model Output
+________________________________________
+1.	Test Scenario & Description
+Clearly describe the regression scenario being tested.
+Specify:
+• Expected input and output formats
+• The nature and cause of the regression issue
+• The intended improvement or fix outcome
+________________________________________
+2.	Project A – Pre-Optimization (Faulty Implementation)
+Generate a complete project folder named “Project_A_Faulty” containing:
+• original_code.py – Faulty implementation file showing regression (for example, a previously working feature now fails).
+• requirements_original.txt – Environment setup file.
+• setup_original.sh – Setup script.
+• Input data or configuration file if required.
+• test_original.py – Automated test cases verifying the regression or failed behavior.
+• run_original.sh – Execution script that runs tests and logs the failures.
+• log_original.txt – Execution log file.
+• time_original.txt – Performance and timing report.
+________________________________________
+3.	Project B – Post-Optimization (Improved Implementation)
+Generate a complete project folder named “Project_B_Optimized” containing:
+• optimized_code.py – Improved implementation fixing the regression and improving performance.
+• requirements_optimized.txt – Environment setup file.
+• setup_optimized.sh – Setup script.
+• Input data or configuration file if required.
+• test_optimized.py – Automated test cases verifying the corrected and optimized behavior.
+• run_optimized.sh – Execution script that runs all tests and logs results.
+• log_optimized.txt – Execution log file.
+• time_optimized.txt – Performance and timing report.
+________________________________________
+4.	Test Data Generation
+The model must generate at least five structured test cases covering:
+• Normal cases
+• Boundary or edge cases
+• Invalid or malformed inputs
+• Hidden vulnerabilities
+• Complex nested logic
+Each test must include:
+• Input data
+• Expected output
+• Regression type or description
+• Expected success or failure outcome
+All test cases must be saved as test_data.json inside each project.
+________________________________________
+5.	Comparison and Reporting
+After both projects have been generated and executed, produce a summary report (compare_report.md) containing:
+• Side-by-side comparison of test results (before vs. after)
+• Table showing accuracy, stability, error rates, and performance improvements
+• Description of key optimizations and fixes
+• Observations on correctness and reliability differences between versions
+________________________________________
+6.	Reproducible Environment
+Both projects must include:
+• Their own environment setup (requirements.txt or environment.yaml)
+• Setup scripts for environment initialization
+• Optional Dockerfiles for containerized consistency
+________________________________________
+7.	Execution Scripts
+Each project must include a one-click execution script (run_original.sh and run_optimized.sh) that performs:
+• Environment setup
+• Running of test cases
+• Saving of logs and reports
+Additionally, a master script (run_all.sh) must be generated at the root level to:
+• Execute both projects in sequence
+• Produce the final comparison report automatically
+________________________________________
+8.	Expected Output
+The model must output all required files for both Project A and Project B, including:
+• Implementation code
+• Test cases
+• Logs and timing data
+• Environment setup files
+• Comparison report
+________________________________________
+9.	Documentation
+Generate a README.md file at the root level explaining:
+• The purpose and context of both projects
+• The regression being tested and how it was fixed
+• Instructions for running each project and the overall comparison workflow
+• Environment setup and reproducibility details
+• Limitations or known edge cases not addressed in the implementation
+________________________________________
+Deliverables (All must be saved as local files)
+________________________________________
+Project A – Pre-Optimization (Faulty Implementation)
+1.	input_data.json
+2.	original_code.py
+3.	requirements_original.txt
+4.	setup_original.sh
+5.	test_original.py
+6.	run_original.sh
+7.	log_original.txt
+8.	time_original.txt
+________________________________________
+Project B – Post-Optimization (Improved Implementation)
+9. optimized_code.py
+10. requirements_optimized.txt
+11. setup_optimized.sh
+12. test_optimized.py
+13. run_optimized.sh
+14. log_optimized.txt
+15. time_optimized.txt
+________________________________________
+Shared Deliverables
+16. test_data.json
+17. compare_report.md
+18. run_all.sh
+19. README.md
