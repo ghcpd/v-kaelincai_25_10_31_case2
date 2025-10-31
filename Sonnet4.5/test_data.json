@@ -1,0 +1,152 @@
+[
+  {
+    "test_id": 1,
+    "name": "Normal case - Valid user data",
+    "input": {
+      "user_id": 12345,
+      "username": "john_doe",
+      "email": "john@example.com",
+      "age": 30,
+      "balance": 1500.50,
+      "is_active": true
+    },
+    "expected_output": {
+      "valid": true,
+      "normalized_data": {
+        "user_id": "12345",
+        "username": "john_doe",
+        "email": "john@example.com",
+        "age": "30",
+        "balance": "1500.50",
+        "is_active": "True"
+      }
+    },
+    "regression_type": "None - Should pass in both versions",
+    "expected_result": "success"
+  },
+  {
+    "test_id": 2,
+    "name": "Edge case - Numeric string inputs",
+    "input": {
+      "user_id": "67890",
+      "username": "jane_smith",
+      "email": "jane@example.com",
+      "age": "25",
+      "balance": "2500.75",
+      "is_active": "true"
+    },
+    "expected_output": {
+      "valid": true,
+      "normalized_data": {
+        "user_id": "67890",
+        "username": "jane_smith",
+        "email": "jane@example.com",
+        "age": "25",
+        "balance": "2500.75",
+        "is_active": "true"
+      }
+    },
+    "regression_type": "Type checking regression - Fails in faulty version due to strict isinstance() checks",
+    "expected_result": "success"
+  },
+  {
+    "test_id": 3,
+    "name": "Boundary case - Zero and negative values",
+    "input": {
+      "user_id": 0,
+      "username": "test_user",
+      "email": "test@example.com",
+      "age": 0,
+      "balance": -100.00,
+      "is_active": false
+    },
+    "expected_output": {
+      "valid": true,
+      "normalized_data": {
+        "user_id": "0",
+        "username": "test_user",
+        "email": "test@example.com",
+        "age": "0",
+        "balance": "-100.00",
+        "is_active": "False"
+      }
+    },
+    "regression_type": "None - Should pass in both versions",
+    "expected_result": "success"
+  },
+  {
+    "test_id": 4,
+    "name": "Invalid input - Missing required fields",
+    "input": {
+      "user_id": 99999,
+      "username": "incomplete_user"
+    },
+    "expected_output": {
+      "valid": false,
+      "error": "Missing required fields: email, age, balance, is_active"
+    },
+    "regression_type": "None - Should fail validation in both versions",
+    "expected_result": "validation_failure"
+  },
+  {
+    "test_id": 5,
+    "name": "Complex nested case - Mixed type representations",
+    "input": {
+      "user_id": "ABC123",
+      "username": "power_user",
+      "email": "power@example.com",
+      "age": 35.0,
+      "balance": 5000,
+      "is_active": 1
+    },
+    "expected_output": {
+      "valid": true,
+      "normalized_data": {
+        "user_id": "ABC123",
+        "username": "power_user",
+        "email": "power@example.com",
+        "age": "35.0",
+        "balance": "5000",
+        "is_active": "1"
+      }
+    },
+    "regression_type": "Type flexibility regression - Fails in faulty version due to strict type validation",
+    "expected_result": "success"
+  },
+  {
+    "test_id": 6,
+    "name": "Malformed input - Invalid email format",
+    "input": {
+      "user_id": 55555,
+      "username": "bad_email_user",
+      "email": "not_an_email",
+      "age": 28,
+      "balance": 1000.00,
+      "is_active": true
+    },
+    "expected_output": {
+      "valid": false,
+      "error": "Invalid email format"
+    },
+    "regression_type": "None - Should fail validation in both versions",
+    "expected_result": "validation_failure"
+  },
+  {
+    "test_id": 7,
+    "name": "Hidden vulnerability - SQL injection attempt in username",
+    "input": {
+      "user_id": 77777,
+      "username": "admin'; DROP TABLE users; --",
+      "email": "hacker@example.com",
+      "age": 99,
+      "balance": 0.01,
+      "is_active": true
+    },
+    "expected_output": {
+      "valid": false,
+      "error": "Username contains invalid characters"
+    },
+    "regression_type": "None - Should fail validation in both versions",
+    "expected_result": "validation_failure"
+  }
+]
