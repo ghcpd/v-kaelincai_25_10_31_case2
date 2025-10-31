@@ -1,0 +1,54 @@
+[
+  {
+    "id": "alpha",
+    "metrics": [
+      {"name": "core", "value": 10, "weight": 1.5},
+      {"name": "edge", "value": 3, "weight": 0.5, "enabled": false},
+      {
+        "name": "nested",
+        "weight": 1,
+        "submetrics": [
+          {"name": "inner-a", "value": 2, "weight": 2},
+          {"name": "inner-b", "value": -1, "weight": 1}
+        ]
+      }
+    ]
+  },
+  {
+    "id": "beta",
+    "metrics": [
+      {"name": "core", "value": 7, "weight": 1},
+      {"name": "unstable", "value": "9", "weight": "0.5"},
+      {"name": "invalid", "value": null, "weight": 1}
+    ]
+  },
+  {
+    "id": 300,
+    "metrics": [
+      {"name": "core", "value": 4, "weight": 2},
+      {"name": "malformed", "payload": "DROP TABLE"},
+      {
+        "name": "nested",
+        "weight": 1,
+        "submetrics": [
+          {"name": "inner", "value": 1, "weight": 10}
+        ]
+      }
+    ]
+  },
+  {
+    "id": "delta",
+    "metrics": [
+      {
+        "name": "boundary",
+        "value": 0,
+        "weight": 0.0,
+        "submetrics": [
+          {"name": "epsilon", "value": 1, "weight": 0.2, "enabled": false},
+          {"name": "zeta", "value": 20, "weight": 0.01}
+        ]
+      },
+      {"name": "negative", "value": -5, "weight": 1.1}
+    ]
+  }
+]

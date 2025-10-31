@@ -1,0 +1,30 @@
+============================= test session starts =============================
+platform win32 -- Python 3.x, pytest-7.4.4, pluggy-1.3.0
+rootdir: Project_A_Faulty
+collected 5 items
+
+test_original.py FFFFF                                                 [100%]
+
+=================================== FAILURES ===================================
+________________________________ test_normal_case_alpha ________________________
+E   KeyError: 'alpha'
+
+________________________________ test_numeric_string_handling __________________
+E   KeyError: 'beta'
+
+________________________________ test_non_string_identifier ____________________
+E   KeyError: '300'
+
+________________________________ test_nested_boundary_case _____________________
+E   KeyError: 'delta'
+
+____________________________ test_invalid_input_type_rejected __________________
+E   Failed: DID NOT RAISE <class 'TypeError'>
+
+================================ short test summary info =================================
+FAILED test_original.py::test_normal_case_alpha - KeyError: 'alpha'
+FAILED test_original.py::test_numeric_string_handling - KeyError: 'beta'
+FAILED test_original.py::test_non_string_identifier - KeyError: '300'
+FAILED test_original.py::test_nested_boundary_case - KeyError: 'delta'
+FAILED test_original.py::test_invalid_input_type_rejected - Failed: DID NOT RAISE <class 'TypeError'>
+================================== 5 failed in 0.42s ==================================
