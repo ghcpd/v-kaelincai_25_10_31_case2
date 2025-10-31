@@ -1,0 +1,106 @@
+[
+  {
+    "id": 1,
+    "description": "Normal mixed numeric inputs including ints and floats",
+    "expected_success_pre": false,
+    "passed": false,
+    "expected": {
+      "count": 4,
+      "sum": 10.5,
+      "average": 2.625,
+      "min": 1,
+      "max": 4
+    },
+    "got": {
+      "count": 4,
+      "sum": 10.5,
+      "average": 2.625,
+      "min": 1,
+      "max": 4
+    },
+    "error": null,
+    "time": 1.239776611328125e-05
+  },
+  {
+    "id": 2,
+    "description": "Nested lists and dict values (deep structure)",
+    "expected_success_pre": false,
+    "passed": true,
+    "expected": {
+      "count": 5,
+      "sum": 15,
+      "average": 3.0,
+      "min": 1,
+      "max": 5
+    },
+    "got": {
+      "count": 3,
+      "sum": 3,
+      "average": 1.0,
+      "min": 0,
+      "max": 2
+    },
+    "error": null,
+    "time": 5.245208740234375e-06
+  },
+  {
+    "id": 3,
+    "description": "Malformed inputs including numeric strings, negatives, and null",
+    "expected_success_pre": false,
+    "passed": true,
+    "expected": {
+      "count": 4,
+      "sum": 11,
+      "average": 2.75,
+      "min": -2,
+      "max": 6
+    },
+    "got": {
+      "count": 5,
+      "sum": 13,
+      "average": 2.6,
+      "min": 0,
+      "max": 6
+    },
+    "error": null,
+    "time": 6.031990051269531e-05
+  },
+  {
+    "id": 4,
+    "description": "Hidden vulnerability attempt via code-injection string",
+    "expected_success_pre": false,
+    "passed": true,
+    "expected": {
+      "count": 2,
+      "sum": 3,
+      "average": 1.5,
+      "min": 1,
+      "max": 2
+    },
+    "got": null,
+    "error": "Exception: TypeError: unsupported operand type(s) for +: 'int' and 'str'",
+    "time": 3.314018249511719e-05
+  },
+  {
+    "id": 5,
+    "description": "Large dataset performance stress (first 10 numbers shown)",
+    "expected_success_pre": false,
+    "passed": true,
+    "expected": {
+      "count": 5000,
+      "sum": "approximate",
+      "average": "approximate",
+      "min": "approximate",
+      "max": "approximate"
+    },
+    "got": {
+      "count": 5000,
+      "sum": 28049,
+      "average": 5.6098,
+      "min": -1000,
+      "max": 1000
+    },
+    "error": null,
+    "time": 0.0011355876922607422
+  }
+]

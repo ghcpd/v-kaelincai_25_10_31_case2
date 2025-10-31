@@ -1,0 +1,1 @@
+# Minimal requirements for faulty project (no extra libs)
