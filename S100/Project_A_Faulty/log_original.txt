@@ -1,0 +1,117 @@
+F.FFF                                                                    [100%]
+================================== FAILURES ===================================
+_____________________ test_balanced_normal_metrics_match ______________________
+
+    def test_balanced_normal_metrics_match():
+        analyzer = RegressionAnalyzer()
+        result = analyzer.evaluate_case(load_case("balanced-normal"))
+        expected = {
+            "mae": 1.775,
+            "rmse": 1.8822,
+            "bias": 0.115,
+            "stability_index": 0.99,
+        }
+>       assert result == approx_dict(expected)
+E       AssertionError: assert {'bias': 0.0,...9500820125959} == {'bias': 0.11....99 ¡À 9.9e-04}
+E         
+E         Differing items:
+E         {'mae': 1.0} != {'mae': 1.775 ¡À 1.8e-03}
+E         {'stability_index': 0.9929500820125959} != {'stability_index': 0.99 ¡À 9.9e-04}
+E         {'bias': 0.0} != {'bias': 0.115 ¡À 1.2e-04}
+E         {'rmse': 1.4142135623730951} != {'rmse': 1.8822 ¡À 1.9e-03}
+E         Use -v to get more diff
+
+Project_A_Faulty\test_original.py:32: AssertionError
+_______________________ test_invalid_data_should_raise ________________________
+
+    def test_invalid_data_should_raise():
+        analyzer = RegressionAnalyzer()
+        case = load_case("invalid-malformed")
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+Project_A_Faulty\test_original.py:47: Failed
+____________ test_hidden_vulnerability_metrics_match_documentation ____________
+
+    def test_hidden_vulnerability_metrics_match_documentation():
+        analyzer = RegressionAnalyzer()
+        result = analyzer.evaluate_case(load_case("hidden-vulnerability"))
+        expected = {
+            "mae": 0.5309,
+            "rmse": 0.6207,
+            "bias": 0.5053,
+            "stability_index": 0.9515,
+        }
+>       assert result == approx_dict(expected)
+E       AssertionError: assert {'bias': 0.0,...y_index': 1.0} == {'bias': 0.50...515 ¡À 9.5e-04}
+E         
+E         Differing items:
+E         {'mae': 0.0} != {'mae': 0.5309 ¡À 5.3e-04}
+E         {'stability_index': 1.0} != {'stability_index': 0.9515 ¡À 9.5e-04}
+E         {'bias': 0.0} != {'bias': 0.5053 ¡À 5.1e-04}
+E         {'rmse': 0.0} != {'rmse': 0.6207 ¡À 6.2e-04}
+E         Use -v to get more diff
+
+Project_A_Faulty\test_original.py:60: AssertionError
+_____________ test_complex_nested_adjustments_applied_elementwise _____________
+
+    def test_complex_nested_adjustments_applied_elementwise():
+        analyzer = RegressionAnalyzer()
+        case = load_case("complex-nested")
+        result = analyzer.evaluate_case(case)
+        expected = {
+            "mae": 5.02,
+            "rmse": 6.4555,
+            "bias": 3.2943,
+            "stability_index": 0.976,
+        }
+>       assert result == approx_dict(expected)
+E       AssertionError: assert {'bias': 3.0,...5021112368017} == {'bias': 3.29...976 ¡À 9.8e-04}
+E         
+E         Differing items:
+E         {'mae': 5.0} != {'mae': 5.02 ¡À 5.0e-03}
+E         {'stability_index': 0.975021112368017} != {'stability_index': 0.976 ¡À 9.8e-04}
+E         {'bias': 3.0} != {'bias': 3.2943 ¡À 3.3e-03}
+E         {'rmse': 7.14142842854285} != {'rmse': 6.4555 ¡À 6.5e-03}
+E         Use -v to get more diff
+
+Project_A_Faulty\test_original.py:73: AssertionError
+=========================== short test summary info ===========================
+FAILED Project_A_Faulty/test_original.py::test_balanced_normal_metrics_match
+FAILED Project_A_Faulty/test_original.py::test_invalid_data_should_raise - Fa...
+FAILED Project_A_Faulty/test_original.py::test_hidden_vulnerability_metrics_match_documentation
+FAILED Project_A_Faulty/test_original.py::test_complex_nested_adjustments_applied_elementwise
+4 failed, 1 passed in 0.09s
+{
+  "balanced-normal": {
+    "mae": 1.0,
+    "rmse": 1.4142135623730951,
+    "bias": 0.0,
+    "stability_index": 0.9929500820125959
+  },
+  "boundary-zero": {
+    "mae": 0.0,
+    "rmse": 0.0,
+    "bias": 0.0,
+    "stability_index": 1.0
+  },
+  "invalid-malformed": {
+    "mae": 36.0,
+    "rmse": 58.42088667591412,
+    "bias": -31.0,
+    "stability_index": 0.5498948702565242
+  },
+  "hidden-vulnerability": {
+    "mae": 0.0,
+    "rmse": 0.0,
+    "bias": 0.0,
+    "stability_index": 1.0
+  },
+  "complex-nested": {
+    "mae": 5.0,
+    "rmse": 7.14142842854285,
+    "bias": 3.0,
+    "stability_index": 0.975021112368017
+  }
+}
+Tests exited with status 1
