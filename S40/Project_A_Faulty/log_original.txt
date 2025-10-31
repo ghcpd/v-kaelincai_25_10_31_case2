@@ -1,0 +1,177 @@
+﻿FFFFF                                                                    [100%]
+================================== FAILURES ===================================
+________________________ test_null_entries_are_ignored ________________________
+
+    def test_null_entries_are_ignored():
+        payload = {
+            "metrics": [1.0, None, 3.0, {"shadow": [2.0, None]}]
+        }
+>       result = module.compute_stability_index(payload)
+
+test_original.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+payload = {'metrics': [1.0, None, 3.0, {'shadow': [2.0, None]}]}
+
+    def compute_stability_index(payload: Any, *, minimum: float = 0.0) -> float:
+        """Compute a pseudo "stability" index from nested payload readings.
+    
+        The regression-causing behaviour lives here: the function caches the last
+        result by ``id(payload)``. Mutating a dictionary in-place retains the same
+        object identity, meaning a fresh computation is skipped even though the
+        data changed. Additionally, ``None`` values now raise ``ValueError`` during
+        coercion to ``float``.
+        """
+    
+        global _last_signature, _last_result
+    
+        signature = id(payload)
+        if _last_signature == signature and _last_result is not None:
+            return _last_result
+    
+        total = 0.0
+        count = 0
+    
+        for item in _iter_nested(payload):
+            if item is None:
+>               raise ValueError("Null reading encountered; aborting computation")
+E               ValueError: Null reading encountered; aborting computation
+
+original_code.py:69: ValueError
+________________ test_payload_mutation_triggers_recomputation _________________
+
+    def test_payload_mutation_triggers_recomputation():
+        payload = {"readings": [1.0, 1.0]}
+        first = module.compute_stability_index(payload)
+        payload["readings"].append(9.0)
+        second = module.compute_stability_index(payload)
+>       assert second > first
+E       assert 1.0 > 1.0
+
+test_original.py:32: AssertionError
+________________________ test_textual_noise_is_skipped ________________________
+
+    def test_textual_noise_is_skipped():
+        payload = {
+            "data": [[[{"value": 5.0}, "noise", 1.0]]]
+        }
+>       result = module.compute_stability_index(payload)
+
+test_original.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+payload = {'data': [[[{'value': 5.0}, 'noise', 1.0]]]}
+
+    def compute_stability_index(payload: Any, *, minimum: float = 0.0) -> float:
+        """Compute a pseudo "stability" index from nested payload readings.
+    
+        The regression-causing behaviour lives here: the function caches the last
+        result by ``id(payload)``. Mutating a dictionary in-place retains the same
+        object identity, meaning a fresh computation is skipped even though the
+        data changed. Additionally, ``None`` values now raise ``ValueError`` during
+        coercion to ``float``.
+        """
+    
+        global _last_signature, _last_result
+    
+        signature = id(payload)
+        if _last_signature == signature and _last_result is not None:
+            return _last_result
+    
+        total = 0.0
+        count = 0
+    
+        for item in _iter_nested(payload):
+            if item is None:
+                raise ValueError("Null reading encountered; aborting computation")
+>           total += float(item)
+E           ValueError: could not convert string to float: 'noise'
+
+original_code.py:70: ValueError
+________________________ test_sample_payload_from_file ________________________
+
+    def test_sample_payload_from_file():
+        payload_path = FIXTURES / "input_data.json"
+        payload = module.load_payload(str(payload_path))
+    
+        def expected_value(node):
+            if isinstance(node, dict):
+                total = 0.0
+                count = 0
+                for value in node.values():
+                    subtotal, subcount = expected_value(value)
+                    total += subtotal
+                    count += subcount
+                return total, count
+            if isinstance(node, (list, tuple, set)):
+                total = 0.0
+                count = 0
+                for item in node:
+                    subtotal, subcount = expected_value(item)
+                    total += subtotal
+                    count += subcount
+                return total, count
+            if isinstance(node, bool):
+                return 0.0, 0
+            if isinstance(node, (int, float)):
+                return float(node), 1
+            # Ignore non-numeric types
+            return 0.0, 0
+    
+        total, count = expected_value(payload)
+        expected_average = (total / count) if count else 0.0
+    
+>       result = module.compute_stability_index(payload)
+
+test_original.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+payload = {'batches': [{'batch_id': 'A-100', 'readings': [1.2, 0.7, None, [2.8, 3.1]]}, {'batch_id': 'B-225', 'readings': [{'val...: 'south'}]}, {'batch_id': 'C-504', 'readings': [3.3, 3.4, {'notes': {'fallback': [...]}}]}], 'facility': 'Station-11'}
+
+    def compute_stability_index(payload: Any, *, minimum: float = 0.0) -> float:
+        """Compute a pseudo "stability" index from nested payload readings.
+    
+        The regression-causing behaviour lives here: the function caches the last
+        result by ``id(payload)``. Mutating a dictionary in-place retains the same
+        object identity, meaning a fresh computation is skipped even though the
+        data changed. Additionally, ``None`` values now raise ``ValueError`` during
+        coercion to ``float``.
+        """
+    
+        global _last_signature, _last_result
+    
+        signature = id(payload)
+        if _last_signature == signature and _last_result is not None:
+            return _last_result
+    
+        total = 0.0
+        count = 0
+    
+        for item in _iter_nested(payload):
+            if item is None:
+                raise ValueError("Null reading encountered; aborting computation")
+>           total += float(item)
+E           ValueError: could not convert string to float: 'Station-11'
+
+original_code.py:70: ValueError
+_____________________ test_booleans_and_dicts_are_ignored _____________________
+
+    def test_booleans_and_dicts_are_ignored():
+        payload = {
+            "readings": [True, False, 5.0, {"meta": {"score": 7.0}}]
+        }
+        result = module.compute_stability_index(payload)
+>       assert math.isclose(result, 6.0, rel_tol=1e-9)
+E       assert False
+E        +  where False = <built-in function isclose>(3.25, 6.0, rel_tol=1e-09)
+E        +    where <built-in function isclose> = math.isclose
+
+test_original.py:83: AssertionError
+=========================== short test summary info ===========================
+FAILED test_original.py::test_null_entries_are_ignored - ValueError: Null rea...
+FAILED test_original.py::test_payload_mutation_triggers_recomputation - asser...
+FAILED test_original.py::test_textual_noise_is_skipped - ValueError: could no...
+FAILED test_original.py::test_sample_payload_from_file - ValueError: could no...
+FAILED test_original.py::test_booleans_and_dicts_are_ignored - assert False
+5 failed in 0.08s
+

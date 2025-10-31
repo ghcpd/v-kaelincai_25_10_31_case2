@@ -1,0 +1,42 @@
+[
+  {
+    "name": "normal_nested_payload",
+    "input_summary": "Nested lists and dicts with sparse null readings",
+    "expected_output": 2.675,
+    "regression_type": "Null sanitisation removed causing ValueError",
+    "expected_outcome_faulty": "fail",
+    "expected_outcome_optimized": "pass"
+  },
+  {
+    "name": "mutated_dataset_should_refresh",
+    "input_summary": "Payload mutated between calls with additional measurements",
+    "expected_output": "Updated average should reflect newly appended values",
+    "regression_type": "Cache keyed by object id hides in-place mutations",
+    "expected_outcome_faulty": "fail",
+    "expected_outcome_optimized": "pass"
+  },
+  {
+    "name": "invalid_nested_string_payload",
+    "input_summary": "Deeply nested string that should be rejected and skipped",
+    "expected_output": "Function should ignore text, producing finite average",
+    "regression_type": "Unvalidated float coercion on text values",
+    "expected_outcome_faulty": "fail",
+    "expected_outcome_optimized": "pass"
+  },
+  {
+    "name": "hidden_vulnerability_large_depth",
+    "input_summary": "Recursive nesting up to 30 layers to ensure traversal terminates",
+    "expected_output": "Average computed without recursion overflow",
+    "regression_type": "Unbounded recursion depth risk in greedy walker",
+    "expected_outcome_faulty": "fail",
+    "expected_outcome_optimized": "pass"
+  },
+  {
+    "name": "non_numeric_entries",
+    "input_summary": "Payload with dict meta objects and booleans interleaved",
+    "expected_output": "Only numeric readings influence the score",
+    "regression_type": "Float coercion misinterprets booleans and dicts",
+    "expected_outcome_faulty": "fail",
+    "expected_outcome_optimized": "pass"
+  }
+]
