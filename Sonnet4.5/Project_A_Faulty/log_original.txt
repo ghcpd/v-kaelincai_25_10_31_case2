@@ -1,1 +1,0 @@
-Execution log will be generated when run_original.sh is executed.
